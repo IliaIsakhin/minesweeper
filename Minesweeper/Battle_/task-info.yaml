@@ -604,73 +604,6 @@ files:
         override fun display(): String = if(marked) MARKED_TILE.icon else icon
     }
   learner_created: true
-- name: src/minesweeper/MineField.kt
-  visible: true
-  text: |
-    package minesweeper
-
-    import minesweeper.tile.EmptyTile
-    import minesweeper.tile.Tile
-    import minesweeper.tile.TileIcon
-
-    class MineField(width: Int, height: Int, initialMineCount: Int) {
-
-        val data: Array<Array<Tile>> = run {
-            require(width > 0)
-            require(height > 0)
-
-            Array(width) {
-                Array(height) {
-                    EmptyTile()
-                }
-            }
-        }
-
-        init {
-            fillData(initialMineCount)
-        }
-
-        fun isMinesPresent(): Boolean {
-            return data.any() { arr ->
-                arr
-                    .filter { it.icon == TileIcon.MINE_HIDDEN_TILE.icon }
-                    .any() { it.marked.not() }
-            }
-        }
-
-        fun markTile(x: Int, y: Int) = getTile(x, y)?.mark() == true
-
-        fun getNeighbourTiles(x: Int, y: Int): List<Tile> {
-            return listOfNotNull(
-                getTile(x - 1, y - 1),
-                getTile(x, y - 1),
-                getTile(x + 1, y - 1),
-
-                getTile(x - 1, y),
-                getTile(x + 1, y),
-
-                getTile(x - 1, y + 1),
-                getTile(x, y + 1),
-                getTile(x + 1, y + 1),
-            )
-        }
-
-        private fun getTile(x: Int, y: Int): Tile? = try {
-            data[x][y]
-        } catch (e: IndexOutOfBoundsException) {
-            null
-        }
-
-        fun print() {
-            println(Drawer.drawData(data))
-        }
-
-        private fun fillData(initialMineCount: Int) {
-            this.fillMines(initialMineCount)
-            this.fillTips()
-        }
-    }
-  learner_created: true
 - name: src/minesweeper/tile/Cell.kt
   visible: true
   learner_created: true
@@ -749,49 +682,7 @@ files:
         }
     }
   learner_created: true
-- name: src/minesweeper/util/MineFiller.kt
-  visible: true
-  text: |
-    package minesweeper
-
-    import minesweeper.tile.MineTile
-    import minesweeper.tile.NumberedTile
-    import minesweeper.tile.TileIcon
-    import kotlin.random.Random
-
-    fun MineField.fillMines(initialMineCount: Int) {
-        var readyMines = 0
-        do {
-            val (randX, randY) = Pair(Random.nextInt(data.size), Random.nextInt(data.first().size))
-            val current = data[randX][randY]
-
-            if (current.icon == TileIcon.EMPTY_TILE.icon) {
-                data[randX][randY] = MineTile()
-                readyMines++
-            }
-        } while (readyMines != initialMineCount)
-    }
-
-    fun MineField.fillTips() {
-        for (x in data.indices) {
-            for (y in data[0].indices) {
-                if (data[x][y].icon == TileIcon.MINE_HIDDEN_TILE.icon) continue
-
-                val neighboursCount = getNeighbourTiles(x, y).count { it.icon == TileIcon.MINE_HIDDEN_TILE.icon }
-                if (neighboursCount > 0) {
-                    data[x][y] = NumberedTile(neighboursCount.toString())
-                }
-            }
-        }
-    }
-  learner_created: true
-- name: src/minesweeper/results/OpenResults.kt
-  visible: true
-  learner_created: true
 - name: src/minesweeper/util/UserActionParser.kt
-  visible: true
-  learner_created: true
-- name: src/minesweeper/util/TileParser.kt
   visible: true
   learner_created: true
 - name: src/minesweeper/actions/UserAction.kt
@@ -803,47 +694,95 @@ files:
 - name: src/minesweeper/actions/OpenTileAction.kt
   visible: true
   learner_created: true
+- name: src/minesweeper/results/Results.kt
+  visible: true
+  learner_created: true
+- name: src/minesweeper/entitiy/MineField.kt
+  visible: true
+  text: |
+    package minesweeper
+
+    import minesweeper.tile.EmptyTile
+    import minesweeper.tile.Tile
+    import minesweeper.tile.TileIcon
+
+    class MineField(width: Int, height: Int, initialMineCount: Int) {
+
+        val data: Array<Array<Tile>> = run {
+            require(width > 0)
+            require(height > 0)
+
+            Array(width) {
+                Array(height) {
+                    EmptyTile()
+                }
+            }
+        }
+
+        init {
+            fillData(initialMineCount)
+        }
+
+        fun isMinesPresent(): Boolean {
+            return data.any() { arr ->
+                arr
+                    .filter { it.icon == TileIcon.MINE_HIDDEN_TILE.icon }
+                    .any() { it.marked.not() }
+            }
+        }
+
+        fun markTile(x: Int, y: Int) = getTile(x, y)?.mark() == true
+
+        fun getNeighbourTiles(x: Int, y: Int): List<Tile> {
+            return listOfNotNull(
+                getTile(x - 1, y - 1),
+                getTile(x, y - 1),
+                getTile(x + 1, y - 1),
+
+                getTile(x - 1, y),
+                getTile(x + 1, y),
+
+                getTile(x - 1, y + 1),
+                getTile(x, y + 1),
+                getTile(x + 1, y + 1),
+            )
+        }
+
+        private fun getTile(x: Int, y: Int): Tile? = try {
+            data[x][y]
+        } catch (e: IndexOutOfBoundsException) {
+            null
+        }
+
+        fun print() {
+            println(Drawer.drawData(data))
+        }
+
+        private fun fillData(initialMineCount: Int) {
+            this.fillMines(initialMineCount)
+            this.fillTips()
+        }
+    }
+  learner_created: true
+- name: src/minesweeper/util/UserInputParser.kt
+  visible: true
+  learner_created: true
+- name: src/minesweeper/entitiy/Coordinates.kt
+  visible: true
+  learner_created: true
+- name: src/minesweeper/strategy/MineFillingStrategy.kt
+  visible: true
+  learner_created: true
+- name: src/minesweeper/strategy/DebugMineFillingStrategy.kt
+  visible: true
+  learner_created: true
+- name: src/minesweeper/strategy/DefaultMineFillingStrategy.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/7690#comment
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Wrong answer in test #2
-
-    There should be 1 &#39;*&#39; symbol in the last grid. Found: 0
-
-    Please find below the output of your program during this failed test.
-    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
-
-    ---
-
-    How many mines do you want on the field?
-    &gt; 1
-     │123456789│
-    —│—————————│
-    1│.........│
-    2│.........│
-    3│.........│
-    4│.........│
-    5│.........│
-    6│.........│
-    7│.........│
-    8│.........│
-    9│.........│
-    —│—————————│
-    Set/unset mines marks or claim a cell as free:
-    &gt; 3 9 mine
-     │123456789│
-    —│—————————│
-    1│.........│
-    2│.........│
-    3│.........│
-    4│.........│
-    5│.........│
-    6│.........│
-    7│.........│
-    8│.........│
-    9│.........│
-    —│—————————│
-    Set/unset mines marks or claim a cell as free:
-  time: Sat, 05 Feb 2022 17:44:42 UTC
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Sun, 13 Feb 2022 11:12:16 UTC
 record: -1

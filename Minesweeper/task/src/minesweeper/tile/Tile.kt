@@ -1,18 +1,20 @@
 package minesweeper.tile
 
-import minesweeper.MineField
+import minesweeper.entitiy.Coordinates
+import minesweeper.entitiy.MineField
 import minesweeper.results.NotPermittedResult
 import minesweeper.results.NoOpResult
-import minesweeper.results.Result
+import minesweeper.results.UserTurnResult
 
-abstract class Tile(x: Int, y: Int, var mineField: MineField): Cell(x, y) {
+abstract class Tile(coordinates: Coordinates, var mineField: MineField): Cell(coordinates) {
 
     abstract val tileView: TileView
     var marked: Boolean = false
     var opened: Boolean = false
 
-    open fun open(): Result {
+    open fun open(): UserTurnResult {
         if (!opened) {
+            marked = false
             opened = true
             return NoOpResult()
         }
@@ -21,11 +23,13 @@ abstract class Tile(x: Int, y: Int, var mineField: MineField): Cell(x, y) {
     }
 
     open fun display(): String {
-        if (opened.not()) return TileView.UNOPENED_TILE.symbol
-        return if (marked) TileView.MARKED_TILE.symbol else tileView.symbol
+        if (marked) return TileView.MARKED_TILE.symbol
+        return if (opened.not()) return TileView.UNOPENED_TILE.symbol else tileView.symbol
     }
 
-    open fun mark(): Result {
+    fun displayTruly() = tileView.symbol
+
+    open fun mark(): UserTurnResult {
         marked = !marked
         return NoOpResult()
     }

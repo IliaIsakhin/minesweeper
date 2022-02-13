@@ -1,37 +1,29 @@
 package minesweeper
 
-import minesweeper.actions.UserAction
+import minesweeper.entitiy.MineField
 import minesweeper.results.NotPermittedResult
-import minesweeper.results.Result
+import minesweeper.results.UserTurnResult
+import minesweeper.strategy.DefaultMineFillingStrategy
 import minesweeper.util.UserActionParser
+import minesweeper.util.UserInputParser
 
 fun main() {
-    println("How many mines do you want on the field?")
-
-    val initialMineCount = readLine()?.toInt()!!
-    val mineField = MineField(9, 9, initialMineCount)
-
-    var guessedX: Int
-    var guessedY: Int
-    var userAction: UserAction
-    var prevResult: Result
+    val mineField = MineField(9, 9, DefaultMineFillingStrategy())
+    var prevUserTurnResult: UserTurnResult
 
     do {
-        mineField.print()
+        println(mineField.getAsString())
         println("Set/unset mines marks or claim a cell as free:")
-        readLine()
-            ?.trim()
-            ?.split(" ")
-            ?.take(3)!!
-            .also {
-                guessedX = it[1].toInt() - 1
-                guessedY = it[0].toInt() - 1
-                userAction = UserActionParser.parse(it[2])
-            }
 
-        val tile = mineField.getTile(guessedX, guessedY)
-        prevResult = if (tile != null) userAction.doAction(tile) else NotPermittedResult()
-    } while (prevResult.shouldEndGame().not())
+        val userInput = UserInputParser.readUserInput()
+        val userAction = UserActionParser.parse(userInput.userActionStr)
+        val tile = mineField.getTile(userInput.coordinates)
 
-    println(prevResult.message)
+        prevUserTurnResult = if (tile != null) {
+            userAction.doAction(tile)
+        } else {
+            NotPermittedResult()
+        }
+        println(prevUserTurnResult.getMessageToPrint())
+    } while (prevUserTurnResult.shouldEndGame().not())
 }

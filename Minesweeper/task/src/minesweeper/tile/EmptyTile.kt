@@ -1,19 +1,21 @@
 package minesweeper.tile
 
-import minesweeper.MineField
+import minesweeper.entitiy.Coordinates
+import minesweeper.entitiy.MineField
 import minesweeper.results.NotPermittedResult
 import minesweeper.results.NoOpResult
-import minesweeper.results.Result
+import minesweeper.results.UserTurnResult
 
-class EmptyTile(x: Int, y: Int, mineField: MineField) : Tile(x, y, mineField) {
+class EmptyTile(coordinates: Coordinates, mineField: MineField) : Tile(coordinates, mineField) {
     override val tileView: TileView = TileView.EMPTY_TILE
 
-    override fun open(): Result {
+    override fun open(): UserTurnResult {
         if (opened) return NotPermittedResult()
+        marked = false
         opened = true
 
         val neighbourTiles = nearestCellsCoordinates
-            .mapNotNull { (x, y) -> mineField.getTile(x, y) }
+            .mapNotNull(mineField::getTile)
             .filter { it !is MineTile && it.opened.not() }
 
         if (neighbourTiles.isEmpty()) return NoOpResult()

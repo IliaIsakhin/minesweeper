@@ -11,7 +11,7 @@ object UserActionParser {
             "free" -> OpenTileAction()
             "mine" -> MarkMineAction()
 
-            else -> throw IllegalArgumentException("No action to run")
+            else -> throw IllegalArgumentException("""No action "$str" to run""")
         }
     }
 }

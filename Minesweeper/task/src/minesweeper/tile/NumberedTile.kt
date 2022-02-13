@@ -1,18 +1,29 @@
 package minesweeper.tile
 
-import minesweeper.MineField
+import minesweeper.entitiy.Coordinates
+import minesweeper.entitiy.MineField
 import minesweeper.results.NoOpResult
 import minesweeper.results.NotPermittedResult
-import minesweeper.results.Result
+import minesweeper.results.UserTurnResult
 
-class NumberedTile(x: Int, y: Int, mineField: MineField, override val tileView: TileView) : Tile(x, y, mineField) {
+class NumberedTile(
+    coordinates: Coordinates,
+    mineField: MineField,
+    marked: Boolean = false,
+    override val tileView: TileView
+) : Tile(coordinates, mineField) {
+
+    init {
+        this.marked = marked
+    }
+
     override fun display(): String {
         return if (opened.not()) {
             return if (marked) TileView.MARKED_TILE.symbol else TileView.UNOPENED_TILE.symbol
         } else tileView.symbol
     }
 
-    override fun mark(): Result {
+    override fun mark(): UserTurnResult {
         if (opened.not()) {
             marked = !marked
             return NoOpResult()

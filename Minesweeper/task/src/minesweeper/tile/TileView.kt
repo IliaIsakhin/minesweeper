@@ -17,7 +17,8 @@ enum class TileView(val symbol: String) {
     NINE("9"),
 
     VERTICAL_BORDER("│"),
-    HORISONTAL_BORDER("—");
+    HORISONTAL_BORDER("—"),
+    BREAK_LINE("\r\n");
 
     override fun toString(): String = symbol
 

@@ -1,16 +1,18 @@
 package minesweeper.tile
 
-abstract class Cell(val x: Int, val y: Int) {
+import minesweeper.entitiy.Coordinates
+
+abstract class Cell(val coordinates: Coordinates) {
     val nearestCellsCoordinates = listOf(
-        Pair(x - 1, y - 1),
-        Pair(x, y - 1),
-        Pair(x + 1, y - 1),
+        Coordinates(coordinates.x - 1, coordinates.y - 1),
+        Coordinates(coordinates.x,     coordinates.y - 1),
+        Coordinates(coordinates.x + 1, coordinates.y - 1),
 
-        Pair(x - 1, y),
-        Pair(x + 1, y),
+        Coordinates(coordinates.x - 1, coordinates.y),
+        Coordinates(coordinates.x + 1, coordinates.y),
 
-        Pair(x - 1, y + 1),
-        Pair(x, y + 1),
-        Pair(x + 1, y + 1),
+        Coordinates(coordinates.x - 1, coordinates.y + 1),
+        Coordinates(coordinates.x,     coordinates.y + 1),
+        Coordinates(coordinates.x + 1, coordinates.y + 1),
     )
 }

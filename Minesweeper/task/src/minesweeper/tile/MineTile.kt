@@ -1,24 +1,20 @@
 package minesweeper.tile
 
-import minesweeper.MineField
+import minesweeper.entitiy.Coordinates
+import minesweeper.entitiy.MineField
 import minesweeper.results.LooseResult
-import minesweeper.results.Result
-import minesweeper.results.WonResult
+import minesweeper.results.UserTurnResult
 import minesweeper.tile.TileView.*
 
-class MineTile(x: Int, y: Int, mineField: MineField): Tile(x, y, mineField) {
+class MineTile(coordinates: Coordinates, mineField: MineField, marked: Boolean = false): Tile(coordinates, mineField) {
+
+    init {
+        this.marked = marked
+    }
 
     override val tileView = MINE_HIDDEN_TILE
 
-    override fun open(): Result {
-        return LooseResult()
-    }
-
-    override fun mark(): Result {
-        val result = super.mark()
-
-        if (mineField.isMinesPresent().not()) return WonResult()
-
-        return result
+    override fun open(): UserTurnResult {
+        return LooseResult(mineField.getAsString(finalForm = true))
     }
 }
