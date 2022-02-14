@@ -2,15 +2,15 @@ package minesweeper.strategy
 
 import minesweeper.entitiy.Coordinates
 import minesweeper.entitiy.MineField
-import minesweeper.tile.EmptyTile
-import minesweeper.tile.MineTile
+import minesweeper.entitiy.tile.EmptyTile
+import minesweeper.entitiy.tile.MineTile
 import minesweeper.util.UserInputParser
 import kotlin.random.Random
 
 class DefaultMineFillingStrategy: MineFillingStrategy {
     private val initialMineCount: Int
 
-    override fun isStrategyLazy() = true
+    override fun isLazy() = true
 
     init {
         println("How many mines do you want on the field?")

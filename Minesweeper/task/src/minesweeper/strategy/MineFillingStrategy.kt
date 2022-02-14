@@ -2,13 +2,13 @@ package minesweeper.strategy
 
 import minesweeper.entitiy.Coordinates
 import minesweeper.entitiy.MineField
-import minesweeper.tile.MineTile
-import minesweeper.tile.NumberedTile
-import minesweeper.tile.TileView
+import minesweeper.entitiy.tile.MineTile
+import minesweeper.entitiy.tile.NumberedTile
+import minesweeper.entitiy.tile.TileView
 
 interface MineFillingStrategy {
 
-    fun isStrategyLazy() = false
+    fun isLazy() = false
 
     fun fill(mineField: MineField, startingCoordinate: Coordinates) {
         fillMines(mineField, startingCoordinate)

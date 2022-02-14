@@ -2,11 +2,11 @@ package minesweeper.actions
 
 import minesweeper.results.UserTurnResult
 import minesweeper.results.WonResult
-import minesweeper.tile.Tile
+import minesweeper.entitiy.tile.Tile
 
-class OpenTileAction: UserAction {
+object OpenTileAction: UserAction {
 
-    override fun getName(): String = "Open"
+    override fun getName(): String = "free"
 
     override fun doAction(tile: Tile): UserTurnResult {
         val filled = tile.mineField.fillMinesIfNeeded(tile.coordinates)

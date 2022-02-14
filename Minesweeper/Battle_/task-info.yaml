@@ -549,76 +549,6 @@ files:
         }
     }
   learner_created: false
-- name: src/minesweeper/tile/MineTile.kt
-  visible: true
-  text: |-
-    package minesweeper.tile
-
-    class MineTile: Tile() {
-
-        override val icon = TileIcon.MINE_HIDDEN_TILE.icon
-
-        override fun display() = if (marked) TileIcon.MARKED_TILE.icon else TileIcon.EMPTY_TILE.icon
-    }
-  learner_created: true
-- name: src/minesweeper/tile/Tile.kt
-  visible: true
-  text: |
-    package minesweeper.tile
-
-    abstract class Tile {
-
-        abstract val icon: String
-        open val couldBeMarked: Boolean = true
-        var marked: Boolean = false
-
-        open fun display(): String = icon
-
-        fun mark(): Boolean =
-            if (couldBeMarked) {
-                marked = !marked
-                true
-            } else false
-    }
-  learner_created: true
-- name: src/minesweeper/tile/NumberedTile.kt
-  visible: true
-  text: |-
-    package minesweeper.tile
-
-    class NumberedTile(override val icon: String) : Tile() {
-        override val couldBeMarked = false
-    }
-  learner_created: true
-- name: src/minesweeper/tile/EmptyTile.kt
-  visible: true
-  text: |-
-    package minesweeper.tile
-
-    import minesweeper.tile.TileIcon.*
-
-    class EmptyTile: Tile() {
-
-        override val icon = EMPTY_TILE.icon
-
-        override fun display(): String = if(marked) MARKED_TILE.icon else icon
-    }
-  learner_created: true
-- name: src/minesweeper/tile/Cell.kt
-  visible: true
-  learner_created: true
-- name: src/minesweeper/tile/TileView.kt
-  visible: true
-  text: |-
-    package minesweeper.tile
-
-    enum class TileIcon(val icon: String) {
-        EMPTY_TILE("."),
-        MARKED_TILE("*"),
-        MINE_HIDDEN_TILE("X")
-
-    }
-  learner_created: true
 - name: src/minesweeper/util/Drawer.kt
   visible: true
   text: |-
@@ -779,10 +709,80 @@ files:
 - name: src/minesweeper/strategy/DefaultMineFillingStrategy.kt
   visible: true
   learner_created: true
+- name: src/minesweeper/entitiy/tile/Cell.kt
+  visible: true
+  learner_created: true
+- name: src/minesweeper/entitiy/tile/EmptyTile.kt
+  visible: true
+  text: |-
+    package minesweeper.tile
+
+    import minesweeper.tile.TileIcon.*
+
+    class EmptyTile: Tile() {
+
+        override val icon = EMPTY_TILE.icon
+
+        override fun display(): String = if(marked) MARKED_TILE.icon else icon
+    }
+  learner_created: true
+- name: src/minesweeper/entitiy/tile/MineTile.kt
+  visible: true
+  text: |-
+    package minesweeper.tile
+
+    class MineTile: Tile() {
+
+        override val icon = TileIcon.MINE_HIDDEN_TILE.icon
+
+        override fun display() = if (marked) TileIcon.MARKED_TILE.icon else TileIcon.EMPTY_TILE.icon
+    }
+  learner_created: true
+- name: src/minesweeper/entitiy/tile/NumberedTile.kt
+  visible: true
+  text: |-
+    package minesweeper.tile
+
+    class NumberedTile(override val icon: String) : Tile() {
+        override val couldBeMarked = false
+    }
+  learner_created: true
+- name: src/minesweeper/entitiy/tile/Tile.kt
+  visible: true
+  text: |
+    package minesweeper.tile
+
+    abstract class Tile {
+
+        abstract val icon: String
+        open val couldBeMarked: Boolean = true
+        var marked: Boolean = false
+
+        open fun display(): String = icon
+
+        fun mark(): Boolean =
+            if (couldBeMarked) {
+                marked = !marked
+                true
+            } else false
+    }
+  learner_created: true
+- name: src/minesweeper/entitiy/tile/TileView.kt
+  visible: true
+  text: |-
+    package minesweeper.tile
+
+    enum class TileIcon(val icon: String) {
+        EMPTY_TILE("."),
+        MARKED_TILE("*"),
+        MINE_HIDDEN_TILE("X")
+
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/7690#comment
 status: Solved
 feedback:
   message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
     Academy</a> to continue learning.
-  time: Sun, 13 Feb 2022 11:12:16 UTC
+  time: Mon, 14 Feb 2022 06:31:00 UTC
 record: -1

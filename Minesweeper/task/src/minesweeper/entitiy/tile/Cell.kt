@@ -1,4 +1,4 @@
-package minesweeper.tile
+package minesweeper.entitiy.tile
 
 import minesweeper.entitiy.Coordinates
 

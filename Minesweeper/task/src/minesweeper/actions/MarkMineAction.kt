@@ -2,10 +2,10 @@ package minesweeper.actions
 
 import minesweeper.results.UserTurnResult
 import minesweeper.results.WonResult
-import minesweeper.tile.Tile
+import minesweeper.entitiy.tile.Tile
 
-class MarkMineAction: UserAction {
-    override fun getName() = "Mark"
+object MarkMineAction: UserAction {
+    override fun getName() = "mine"
 
     override fun doAction(tile: Tile): UserTurnResult {
         val result = tile.mark()

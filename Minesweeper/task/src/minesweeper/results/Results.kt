@@ -1,6 +1,6 @@
 package minesweeper.results
 
-import minesweeper.tile.TileView
+import minesweeper.entitiy.tile.TileView
 
 interface UserTurnResult {
     fun shouldEndGame(): Boolean = false

@@ -1,4 +1,4 @@
-package minesweeper.tile
+package minesweeper.entitiy.tile
 
 enum class TileView(val symbol: String) {
     EMPTY_TILE("/"),
@@ -14,7 +14,6 @@ enum class TileView(val symbol: String) {
     SIX("6"),
     SEVEN("7"),
     EIGHT("8"),
-    NINE("9"),
 
     VERTICAL_BORDER("│"),
     HORISONTAL_BORDER("—"),

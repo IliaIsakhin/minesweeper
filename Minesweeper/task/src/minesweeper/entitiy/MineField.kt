@@ -1,9 +1,9 @@
 package minesweeper.entitiy
 
 import minesweeper.strategy.MineFillingStrategy
-import minesweeper.tile.EmptyTile
-import minesweeper.tile.MineTile
-import minesweeper.tile.Tile
+import minesweeper.entitiy.tile.EmptyTile
+import minesweeper.entitiy.tile.MineTile
+import minesweeper.entitiy.tile.Tile
 import minesweeper.util.Drawer
 
 class MineField(val width: Int, val height: Int, private val mineFillingStrategy: MineFillingStrategy) {
@@ -21,7 +21,7 @@ class MineField(val width: Int, val height: Int, private val mineFillingStrategy
     }
 
     init {
-        if (mineFillingStrategy.isStrategyLazy.not()) {
+        if (mineFillingStrategy.isLazy().not()) {
             fillMinesIfNeeded(Coordinates(0, 0))
         }
     }
@@ -52,6 +52,7 @@ class MineField(val width: Int, val height: Int, private val mineFillingStrategy
 
     fun fillMinesIfNeeded(excludeCoordinates: Coordinates): Boolean {
         if (initialized) return false
+
         mineFillingStrategy.fill(this, excludeCoordinates)
         initialized = true
 

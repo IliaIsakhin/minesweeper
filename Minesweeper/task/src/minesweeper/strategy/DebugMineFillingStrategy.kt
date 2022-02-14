@@ -2,7 +2,7 @@ package minesweeper.strategy
 
 import minesweeper.entitiy.Coordinates
 import minesweeper.entitiy.MineField
-import minesweeper.tile.MineTile
+import minesweeper.entitiy.tile.MineTile
 
 class DebugMineFillingStrategy(private val mines: Set<Coordinates>): MineFillingStrategy {
 

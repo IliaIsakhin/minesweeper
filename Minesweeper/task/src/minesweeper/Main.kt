@@ -13,7 +13,7 @@ fun main() {
 
     do {
         println(mineField.getAsString())
-        println("Set/unset mines marks or claim a cell as free:")
+        println("Set/unset mines marks or claim a cell as free. Available actions: ${UserActionParser.getAvailableActionNames()}")
 
         val userInput = UserInputParser.readUserInput()
         val userAction = UserActionParser.parse(userInput.userActionStr)

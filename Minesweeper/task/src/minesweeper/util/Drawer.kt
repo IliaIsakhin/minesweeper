@@ -1,7 +1,7 @@
 package minesweeper.util
 
-import minesweeper.tile.Tile
-import minesweeper.tile.TileView
+import minesweeper.entitiy.tile.Tile
+import minesweeper.entitiy.tile.TileView
 import java.lang.StringBuilder
 
 object Drawer {

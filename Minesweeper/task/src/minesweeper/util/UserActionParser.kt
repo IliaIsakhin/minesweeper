@@ -6,12 +6,14 @@ import minesweeper.actions.UserAction
 
 object UserActionParser {
 
-    fun parse(str: String): UserAction {
-        return when(str)  {
-            "free" -> OpenTileAction()
-            "mine" -> MarkMineAction()
+    private val actions = listOf(MarkMineAction, OpenTileAction)
 
-            else -> throw IllegalArgumentException("""No action "$str" to run""")
-        }
+    fun getAvailableActionNames() = actions.joinToString(separator = ", ") { it.getName() }
+
+    fun parse(str: String): UserAction {
+        return actions.find { it.getName() == str }
+            ?: throw IllegalArgumentException(
+                """No action $str to run. Allowed actions: ${getAvailableActionNames()}"""
+            )
     }
 }

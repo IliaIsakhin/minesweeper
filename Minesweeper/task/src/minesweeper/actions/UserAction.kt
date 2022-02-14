@@ -1,7 +1,7 @@
 package minesweeper.actions
 
 import minesweeper.results.UserTurnResult
-import minesweeper.tile.Tile
+import minesweeper.entitiy.tile.Tile
 
 interface UserAction {
 

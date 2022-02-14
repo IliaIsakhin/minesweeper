@@ -1,10 +1,10 @@
-package minesweeper.tile
+package minesweeper.entitiy.tile
 
 import minesweeper.entitiy.Coordinates
 import minesweeper.entitiy.MineField
 import minesweeper.results.LooseResult
 import minesweeper.results.UserTurnResult
-import minesweeper.tile.TileView.*
+import minesweeper.entitiy.tile.TileView.*
 
 class MineTile(coordinates: Coordinates, mineField: MineField, marked: Boolean = false): Tile(coordinates, mineField) {
 
